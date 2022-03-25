@@ -18,3 +18,26 @@ a {
 * {
   box-sizing: border-box;
 }
+
+input[type='file']::-webkit-file-upload-button,
+input[type='file']::file-selector-button {
+  @apply text-white bg-gray-700 hover:bg-gray-600 font-medium text-sm cursor-pointer border-0 py-2.5 pl-8 pr-4;
+  margin-inline-start: -1rem;
+  margin-inline-end: 1rem;
+}
+
+@keyframes append-animate {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+.new-box {
+  transform-origin: 0% 0;
+  animation: append-animate 0.3s linear;
+}

@@ -5,9 +5,12 @@ import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
-    <div className="w-screen flex justify-center flex-col">
+    <div className="w-full flex justify-center flex-col">
+      <div className="mt-8 mb-12 mx-10 text-4xl w-full justify-start px-6 lg:sticky">
+        Dashboard
+      </div>
       <div className="flex flex-wrap justify-around">
-        {[...Array(3)].map((a) => (
+        {[...Array(6)].map((a) => (
           <MainPublication />
         ))}
       </div>

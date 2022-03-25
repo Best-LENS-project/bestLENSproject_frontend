@@ -1,23 +1,16 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import UserContext from '../contexts/UserContext'
 import ConnectButton from './ConnectButton'
+import CreateHackathonModal from './CreateHackathonModal'
+import CreateProfileModal from './CreateProfileModal'
 
 export default function Header() {
   const [collapsed, setCollapsed] = useState(true)
+  const global = useContext(UserContext)
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-hacker-color-200 p-6 w-full lg:sticky lg:top-0 z-10">
+    <nav className="flex items-center justify-between flex-wrap bg-hacker-color-200 px-6 w-full lg:sticky lg:top-0 z-10 py-1">
       <div className="flex items-center flex-no-shrink text-white mr-6">
-        <svg
-          className="h-8 w-8 mr-2"
-          width="54"
-          height="54"
-          viewBox="0 0 54 54"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z" />
-        </svg>
-        <span className="font-semibold text-xl tracking-tight">
-          Hackerverse
-        </span>
+        <img src={'/images/hackerverse.png'} className="h-24 " />
       </div>
       <div className="block lg:hidden">
         <button className="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white ">
@@ -49,7 +42,7 @@ export default function Header() {
         <div className="mr-10">
           <input
             type="text"
-            class="
+            className="
           form-control
           block
           w-full
@@ -70,6 +63,16 @@ export default function Header() {
             placeholder="Search event"
           />
         </div>
+        {global.user && (
+          <div>
+            <CreateHackathonModal />
+          </div>
+        )}
+        {global.user && (
+          <div>
+            <CreateProfileModal />
+          </div>
+        )}
         <div className="lg:m-0 my-2">
           <ConnectButton />
         </div>

@@ -31,7 +31,6 @@ export const findOwnedTokensOnERC721Contract = async (
       tokensOfUser.push(tokenURI)
     }
   }
-
   console.log(tokensOfUser)
   return tokensOfUser
 }

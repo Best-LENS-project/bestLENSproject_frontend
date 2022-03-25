@@ -11,6 +11,7 @@ export default function ConnectButton() {
   const router = useRouter()
 
   let user = false //getLoggedInUser()
+  console.log(global.user?.address)
   let button = (
     <button
       className={` md:flex transition ease-out duration-500 font-semibold py-3 px-4 rounded-lg bg-hacker-accent-400 hover:bg-hacker-accent-200`}
@@ -22,12 +23,19 @@ export default function ConnectButton() {
   if (global.user) {
     button = (
       <button
-        className={` md:flex transition ease-out duration-500 font-semibold py-3 px-4 rounded-lg bg-hacker-accent-400 hover:bg-hacker-accent-200`}
+        className={` md:flex transition ease-out duration-500 font-semibold py-3 px-4 rounded-lg bg-hacker-accent-600 hover:bg-hacker-accent-200 text-gray-50 align-middle`}
         onClick={() => {
           console.log('logged in', user)
         }}
       >
-        Connected {makeAddressShort(global.user.address)}
+        <div className="flex flex-row items-center">
+          <img
+            src={`https://robohash.org/${global.user?.address}.png?size=120x120`}
+            className="w-8 bg-white rounded-full mr-2"
+          />
+
+          <div>Connected {makeAddressShort(global.user.address)}</div>
+        </div>
       </button>
     )
   }
