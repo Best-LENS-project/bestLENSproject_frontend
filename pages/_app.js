@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }) {
     setState(Object.assign({}, state, updateData))
   }
   useEffect(() => {
-    import('tw-elements')
+    // import('tw-elements')
   }, [])
 
   return (
