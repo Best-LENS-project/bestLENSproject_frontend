@@ -31,6 +31,9 @@ export default function Publication() {
 
   const pub = publications[publication]
   const comms = comments
+  if (!pub) {
+    return <div>Invalid publication</div>
+  }
 
   return (
     <div>
@@ -46,7 +49,7 @@ export default function Publication() {
               <path d="M447.1 256C447.1 273.7 433.7 288 416 288H109.3l105.4 105.4c12.5 12.5 12.5 32.75 0 45.25C208.4 444.9 200.2 448 192 448s-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25l160-160c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25L109.3 224H416C433.7 224 447.1 238.3 447.1 256z" />
             </svg>
             <div className="items-center text-center justify-center flex-col flex">
-              {pub.title}
+              {pub?.title}
             </div>
           </div>
           <div>
@@ -97,27 +100,27 @@ export default function Publication() {
           <div>
             <div className="flex flex-row justify-between px-6 mt-3 w-full">
               <div className="flex flex-row justify-start">
-                <img src={pub.creator.img} className=" h-8 mr-2" />
+                <img src={pub?.creator.img} className=" h-8 mr-2" />
                 <div className="align-middle">
                   <span className="font-light align-middle">
-                    {pub.creator.name}
+                    {pub?.creator.name}
                   </span>
                 </div>
               </div>
               <div className="font-light">
-                <span>{new Date(pub.createdAt).toDateString()}</span>
+                <span>{new Date(pub?.createdAt).toDateString()}</span>
               </div>
             </div>
           </div>
           <div className="my-5">
             <img
-              src={pub.img}
+              src={pub?.img}
               className="md:max-w-2xl rounded shadow-sm  max-w-[70vw]"
             />
           </div>
           <div className="my-5">
             <span className="whitespace-pre-line font-normal">
-              {pub.description}
+              {pub?.description}
             </span>
           </div>
           <div>
@@ -147,7 +150,7 @@ export default function Publication() {
                     </div>
                     <div className="align-middle">
                       <span className="font-light align-middle">
-                        {pub.title}
+                        {pub?.title}
                       </span>
                     </div>
                   </div>
@@ -247,9 +250,9 @@ export default function Publication() {
                     </div>
                   </div>
                   {c.fields
-                    .filter((f) => f.title != 'title')
+                    .filter((f) => f?.title != 'title')
                     .map((f) => (
-                      <div className="flex flex-row" key={f.title}>
+                      <div className="flex flex-row" key={f?.title}>
                         <div className="font-normal text-xl font-mono">
                           {f.name}:{' '}
                         </div>
