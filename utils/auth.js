@@ -13,7 +13,7 @@ export async function loginWithBlockNative(preference) {
   const BLOCKNATIVE_KEY = process.env.BN_API_KEY
 
   // the network id that your dapp runs on
-  const NETWORK_ID = 1
+  const NETWORK_ID = 80001
 
   const onboard = Onboard({
     dappId: BLOCKNATIVE_KEY,

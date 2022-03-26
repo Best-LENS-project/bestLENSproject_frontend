@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import UserContext from '../contexts/UserContext'
 import ConnectButton from './ConnectButton'
+import ConnectProfile from './ConnectProfile'
 import CreateHackathonModal from './CreateHackathonModal'
 import CreateProfileModal from './CreateProfileModal'
 
@@ -63,14 +64,19 @@ export default function Header() {
             placeholder="Search event"
           />
         </div>
-        {global.user && (
+        {global.user && global.profileId && (
           <div>
             <CreateHackathonModal />
           </div>
         )}
-        {global.user && (
-          <div>
-            <CreateProfileModal />
+        {global.user && !global.profileId && (
+          <div className="flex flex-row justify-evenly h-full items-center">
+            <div>
+              <CreateProfileModal />
+            </div>
+            <div>
+              <ConnectProfile />
+            </div>
           </div>
         )}
         <div className="lg:m-0 my-2">

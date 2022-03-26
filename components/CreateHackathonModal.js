@@ -6,6 +6,7 @@ import { publication } from '../mockdata/mock_publication'
 import BLPButton from './Button'
 import MainPublication from './MainPublication'
 import SocialComps from './SocialComps'
+import { create } from 'ipfs-http-client'
 
 const defaultFields = ['title', 'description']
 
@@ -15,6 +16,7 @@ export default function CreateHackathonModal({ publication }) {
   const [startDate, setStartDate] = useState(new Date())
   const [fields, setFields] = useState(defaultFields)
   const [description, setDescription] = useState()
+  const [title, setTitle] = useState()
   const [image, setImage] = useState({ preview: '', raw: '' })
 
   const global = useContext(UserContext)
@@ -40,6 +42,8 @@ export default function CreateHackathonModal({ publication }) {
             description={description}
             image={image}
             setImage={setImage}
+            setTitle={setTitle}
+            title={title}
           />
         )
       case 'details':
@@ -48,6 +52,8 @@ export default function CreateHackathonModal({ publication }) {
             next={() => setStep('preview')}
             fields={fields}
             setFields={setFields}
+            startDate={startDate}
+            setStartDate={setStartDate}
           />
         )
       case 'preview':
@@ -57,6 +63,7 @@ export default function CreateHackathonModal({ publication }) {
             fields={fields}
             image={image}
             startDate={Date.now()}
+            next={closeModal}
           />
         )
     }
@@ -120,14 +127,17 @@ export default function CreateHackathonModal({ publication }) {
                       Create a new Publication
                     </div>
                     <div className="flex flex-row ">
-                      <img
-                        src={`https://robohash.org/${global.user?.address}.png?size=120x120`}
-                        className="w-16 h-16 border-2 rounded-full mr-2 border-hacker-color-200"
-                      />
+                      <div className=" w-16 h-16 rounded-full shadow-lg my-2 bg-white border-2 overflow-hidden mr-1">
+                        <img
+                          className="w-full max-h-sm aspect-square object-cover"
+                          src={global.profile[4]}
+                          alt="Upload an image!"
+                        ></img>
+                      </div>
                       <div className="flex flex-col justify-center items-center">
                         <div>{global.user.address}</div>
                         <div className="mt-2 border-2 border-hacker-accent-600 px-4 py-2 rounded-md min-w-[60%] text-center">
-                          PretzelDAO
+                          {global.profile[3]}
                         </div>
                       </div>
                     </div>
@@ -161,7 +171,7 @@ function ActionSelection({ onBounty, onGeneric }) {
     <div className="flex flex-col w-full justify-center align-middle items-center">
       <div className="my-5 w-full items-center flex flex-row justify-center">
         <BLPButton
-          text={'Generic Publication'}
+          text={'Hackathon Publication'}
           className=" min-w-[50%] py-5"
           clickaction={onBounty}
         ></BLPButton>
@@ -197,9 +207,33 @@ function InfoText({ next }) {
   )
 }
 
-function BasicInfo({ next, description, setDescription, image, setImage }) {
+function BasicInfo({
+  next,
+  description,
+  setDescription,
+  image,
+  setImage,
+  title,
+  setTitle,
+}) {
   return (
     <div>
+      <div className="mb-6">
+        <label
+          htmlFor="message"
+          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+        >
+          Your Hackerthon Title
+        </label>
+        <input
+          id="message"
+          rows="4"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Title me..."
+        ></input>
+      </div>
       <div className="mb-6">
         <label
           htmlFor="message"
@@ -255,7 +289,7 @@ function BasicInfo({ next, description, setDescription, image, setImage }) {
             ></img>
           </div>
           <div className="flex flex-col justify-center items-center w-1/2">
-            <MainPublication img={image.preview} />
+            <MainPublication img={image.preview} preview={true} />
           </div>
         </div>
       </div>
@@ -278,16 +312,15 @@ function DetailsInfo({ next, fields, setFields, startDate, setStartDate }) {
   console.log(fields)
   // let picker
   useEffect(async () => {
-    const lib = await import('material-datetime-picker')
-    console.log('lib,', lib)
-    const p = new lib.default()
-      .on('submit', (val) => console.log(`data: ${val}`))
-      .on('open', () => console.log('opened'))
-      .on('close', () => console.log('closed'))
-    console.log('doc', document)
-    p.open()
-    setPicker(p)
-
+    // const lib = await import('material-datetime-picker')
+    // console.log('lib,', lib)
+    // const p = new lib.default()
+    //   .on('submit', (val) => console.log(`data: ${val}`))
+    //   .on('open', () => console.log('opened'))
+    //   .on('close', () => console.log('closed'))
+    // console.log('doc', document)
+    // p.open()
+    // setPicker(p)
     // document
     //   .querySelector('.c-datepicker-btn')
     //   .setAttribute('click', () => picker.open())
@@ -299,11 +332,12 @@ function DetailsInfo({ next, fields, setFields, startDate, setStartDate }) {
         <div className="datepicker relative form-floating mb-3 xl:w-96">
           <input
             type="text"
+            value={startDate.toDateString()}
             className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
             placeholder="Select a date"
           />
           <label htmlFor="fieldInput" className="text-gray-700">
-            Select a date2
+            Select a Submission Deadline
           </label>
         </div>
         {picker && (
@@ -387,19 +421,26 @@ function DetailsInfo({ next, fields, setFields, startDate, setStartDate }) {
 
 function Preview({ next, image, description, fields, startDate }) {
   console.log('image', image)
-  const pub = publication
+  // const pub = publication
+  const global = useContext(UserContext)
   return (
     <div className="px-6 flex flex-col max-w-3xl mx-auto">
       {' '}
       <div className="flex flex-row justify-between px-6 mt-3">
-        <div className="flex flex-row justify-start">
-          <img src={pub.creator.img} className=" h-8 mr-2" />
+        <div className="flex flex-row justify-start items-center">
+          <div className=" w-12 h-12 rounded-full shadow-lg my-2 bg-white border-2 overflow-hidden mr-1">
+            <img
+              className="w-full max-h-sm aspect-square object-cover"
+              src={global.profile[4]}
+              alt="Upload an image!"
+            ></img>
+          </div>
           <div className="align-middle">
-            <span className="font-light align-middle">{pub.creator.name}</span>
+            <span className="font-light align-middle">{global.profile[3]}</span>
           </div>
         </div>
         <div className="font-light">
-          <span>{new Date(pub.createdAt).toDateString()}</span>
+          <span>{new Date(startDate).toDateString()}</span>
         </div>
       </div>
       <div className="flex flex-row justify-center">
@@ -446,6 +487,7 @@ function Preview({ next, image, description, fields, startDate }) {
         />
         <BLPButton
           text={'Looks Good'}
+          clickaction={next}
           className="min-w-[20%] aspect-video bg-hacker-accent-400"
         />
       </div>

@@ -23,18 +23,24 @@ export default function ConnectButton() {
   if (global.user) {
     button = (
       <button
-        className={` md:flex transition ease-out duration-500 font-semibold py-3 px-4 rounded-lg bg-hacker-accent-600 hover:bg-hacker-accent-200 text-gray-50 align-middle`}
+        className={` md:flex transition ease-out duration-500 font-semibold py-0 px-4 rounded-lg bg-hacker-accent-600 hover:bg-hacker-accent-200 text-gray-50 align-middle flex-row items-center`}
         onClick={() => {
           console.log('logged in', user)
         }}
       >
-        <div className="flex flex-row items-center">
+        <div className=" w-12 h-12 rounded-full shadow-lg my-2 bg-white border-2 overflow-hidden">
           <img
-            src={`https://robohash.org/${global.user?.address}.png?size=120x120`}
-            className="w-8 bg-white rounded-full mr-2"
-          />
-
+            className="w-full max-h-sm aspect-square object-cover"
+            src={
+              global.profileId
+                ? global.profile[4]
+                : `https://robohash.org/${global.user?.address}.png?size=120x120`
+            }
+          ></img>
+        </div>
+        <div className="flex flex-col justify-center items-center h-full ml-2">
           <div>Connected {makeAddressShort(global.user.address)}</div>
+          <div>{global.profileId && <span>{global.profile[3]}</span>}</div>
         </div>
       </button>
     )

@@ -7,10 +7,21 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }) {
   const [state, setState] = useState({
     user: null,
+    profileId: null,
     update,
   })
   function update(data) {
-    setState(Object.assign({}, state, data))
+    let updateData = data
+    Object.keys(state).forEach(function (key) {
+      if (key in data) {
+        // or obj1.hasOwnProperty(key)
+        updateData[key] = data[key]
+      } else {
+        updateData[key] = state[key]
+      }
+    })
+    console.log('updating state', updateData, state, data)
+    setState(Object.assign({}, state, updateData))
   }
   useEffect(() => {
     import('tw-elements')

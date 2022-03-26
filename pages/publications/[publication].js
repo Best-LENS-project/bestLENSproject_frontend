@@ -1,7 +1,15 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-import SocialComps from '../components/SocialComps'
-import { comments, publication } from '../mockdata/mock_publication'
+import { useContext, useState } from 'react'
+import BLPButton from '../../components/Button'
+import SocialComps from '../../components/SocialComps'
+import StatsCardNumbers from '../../components/StatsCardNumbers'
+import WinnersCard from '../../components/WinnersCard'
+import UserContext from '../../contexts/UserContext'
+import {
+  comments,
+  publication,
+  publications,
+} from '../../mockdata/mock_publication'
 
 const sortOptions = [
   {
@@ -18,7 +26,10 @@ const sortOptions = [
 export default function Publication() {
   const [sortOption, setSortOption] = useState(sortOptions[0])
   const router = useRouter()
-  const pub = publication
+  const { publication } = router.query
+  const global = useContext(UserContext)
+
+  const pub = publications[publication]
   const comms = comments
 
   return (
@@ -116,6 +127,96 @@ export default function Publication() {
               shares={0}
               buttons={true}
             />
+          </div>
+          <StatsCardNumbers pub={pub} />
+          <WinnersCard />
+          <div className="mt-8 text-4xl">
+            Publications by {sortOption.title}
+          </div>
+          <div className="flex flex-row justify-center">
+            <div className="min-w-md max-w-4xl rounded-md overflow-hidden shadow-xl w-5/6 m-2 bg-white  hover:shadow-hacker-accent-600 hover:translate-y-1 transition-all shadow-slate-600 py-5">
+              <div className="flex flex-col w-full justify-center align-middle items-start px-8">
+                <div className="flex flex-row justify-between  mt-1 w-full mb-5 items-center">
+                  <div className="flex flex-row justify-start items-center">
+                    <div className=" w-16 h-16 rounded-full shadow-lg my-2 bg-white border-2 overflow-hidden mr-1">
+                      <img
+                        className="w-full max-h-sm aspect-square object-cover"
+                        src={global.profileId ? global.profile[4] : ''}
+                        alt="Upload an image!"
+                      ></img>
+                    </div>
+                    <div className="align-middle">
+                      <span className="font-light align-middle">
+                        {pub.title}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="font-light">
+                    <span>{new Date().toDateString()}</span>
+                  </div>
+                </div>
+
+                <div className="font-normal mb-3 text-3xl w-full">
+                  <div class="mb-6">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >
+                      Your title
+                    </label>
+                    <input
+                      type="text"
+                      id="title"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Awesome Project"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-row w-full">
+                  <textarea
+                    id="message"
+                    rows="4"
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Describe me..."
+                  ></textarea>
+                </div>
+                {pub.fields
+                  .filter((f) => f.name != 'title')
+                  .map((f) => (
+                    <div className="font-normal  text-3xl w-full mt-3">
+                      <div class="mb-2">
+                        <label
+                          for="email"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                        >
+                          {f.name}
+                        </label>
+                        <input
+                          type="text"
+                          id="title"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder={'Your ' + f.name}
+                          required
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <div className="px-4 flex flex-row justify-between items-center">
+                <SocialComps
+                  shares={0}
+                  collections={0}
+                  comments={0}
+                  buttons={true}
+                />
+                <div>
+                  <BLPButton text={'Submit'} />
+                </div>
+              </div>
+            </div>
           </div>
           {comms.sort(sortOption.sorter).map((c) => (
             <div className="flex flex-row justify-center">

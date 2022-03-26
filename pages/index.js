@@ -1,7 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import MainPublication from '../components/MainPublication'
+import { publications } from '../mockdata/mock_publication'
 import styles from '../styles/Home.module.css'
+import { tryContract } from '../utils/chain_utils'
 
 export default function Home() {
   return (
@@ -9,9 +11,11 @@ export default function Home() {
       <div className="mt-8 mb-12 mx-10 text-4xl w-full justify-start px-6 lg:sticky">
         Dashboard
       </div>
+      {/* <button onClick={() => tryContract()}>Try me</button> */}
+
       <div className="flex flex-wrap justify-around">
-        {[...Array(6)].map((a) => (
-          <MainPublication />
+        {publications.map((a, i) => (
+          <MainPublication pub={a} pubid={i} />
         ))}
       </div>
       <footer className={styles.footer}>

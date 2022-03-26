@@ -3,6 +3,11 @@ import Script from 'next/script'
 import { Fragment, useContext, useEffect, useState } from 'react'
 import UserContext from '../contexts/UserContext'
 import { publication } from '../mockdata/mock_publication'
+import {
+  createProfile,
+  getProfileById,
+  getProfileIdFromHandle,
+} from '../utils/chain_utils'
 import BLPButton from './Button'
 import SocialComps from './SocialComps'
 
@@ -25,6 +30,7 @@ export default function CreateProfileModal({ publication }) {
   const [handle, setHandle] = useState()
   const [followModule, setFollowModule] = useState()
   const [image, setImage] = useState({ preview: '', raw: '', value: null })
+  const [loading, setLoading] = useState(false)
 
   const global = useContext(UserContext)
   function closeModal() {
@@ -35,22 +41,46 @@ export default function CreateProfileModal({ publication }) {
     setIsOpen(true)
   }
 
+  async function submitProfile() {
+    try {
+      setLoading(true)
+      const prof = await createProfile(handle, image.raw, global.user.address)
+      if (prof) {
+        const claimed = await getProfileIdFromHandle(handle)
+        if (!claimed) {
+          // setError('Handle not existent!')
+        }
+        if (claimed) {
+          // setError('Claimed profile:' + claimed)
+          const profile = await getProfileById(claimed)
+          global.update({ profile, profileId: claimed, user: global.user })
+          setTimeout(() => closeModal(), 2000)
+        }
+      } else {
+      }
+      console.log('profile', prof)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   function stepToComponent(step) {
     switch (step) {
       case 'selection':
         return (
           <InsertHandle
-            next={() => setStep('info')}
+            next={() => submitProfile()}
             handle={handle}
             setHandle={setHandle}
             image={image}
             setImage={setImage}
             followModule={followModule}
             setFollowModule={setFollowModule}
+            loading={loading}
           />
         )
       case 'info':
-        return <SubmittedHandle next={() => setStep('basic')} />
+        return <SubmittedHandle next={() => submitProfile()} />
     }
   }
 
@@ -58,7 +88,7 @@ export default function CreateProfileModal({ publication }) {
     <>
       <button
         onClick={openModal}
-        className={` md:flex transition ease-out duration-500 font-semibold py-3 px-4 mx-4 rounded-lg bg-hacker-accent-400 hover:bg-hacker-accent-200 text-gray-50`}
+        className={` md:flex transition ease-out duration-500 font-semibold py-2 px-4 mx-4 rounded-lg bg-hacker-accent-400 hover:bg-hacker-accent-200 text-gray-50`}
       >
         Create Profile
       </button>
@@ -151,6 +181,7 @@ function InsertHandle({
   setImage,
   followModule,
   setFollowModule,
+  loading,
 }) {
   return (
     <div>
@@ -317,16 +348,19 @@ function InsertHandle({
         <BLPButton
           className=" text-sm font-medium text-gray-200 bg-red-800 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 min-w-[20%] mt-16"
           clickaction={() => {
-            setStep('selection')
             closeModal()
           }}
           text={' Nevermind!'}
         />
-        <BLPButton
-          text={'Claim My Handle!'}
-          clickaction={next}
-          className={'min-w-[20%] mt-16'}
-        />
+        {loading ? (
+          <div className="w-16 h-16 border-b-2 border-hacker-color-200 rounded-full animate-spin"></div>
+        ) : (
+          <BLPButton
+            text={'Claim My Handle!'}
+            clickaction={next}
+            className={'min-w-[20%] mt-16'}
+          />
+        )}
       </div>
     </div>
   )

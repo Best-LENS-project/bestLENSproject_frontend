@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.5.0",
     "axios": "^0.26.1",
     "bnc-onboard": "^1.38.2",
+    "ipfs-http-client": "^56.0.1",
     "material-datetime-picker": "^2.4.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "12.1.0",
