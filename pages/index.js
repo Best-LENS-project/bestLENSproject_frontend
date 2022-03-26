@@ -15,7 +15,7 @@ export default function Home() {
 
       <div className="flex flex-wrap justify-around">
         {publications.map((a, i) => (
-          <MainPublication pub={a} pubid={i} />
+          <MainPublication pub={a} pubid={i} key={i} />
         ))}
       </div>
       <footer className={styles.footer}>

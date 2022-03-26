@@ -254,9 +254,9 @@ function InsertHandle({
           </div>
         </div>
       )}
-      <div class="flex flex-col justify-start mt-4">
+      <div className="flex flex-col justify-start mt-4">
         <div>
-          <div class="dropdown relative">
+          <div className="dropdown relative">
             <button
               className="dropdown-toggle inline-block px-7 py-3 bg-hacker-accent-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-hacker-accent-400 hover:shadow-lg focus:bg-hacker-accent-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-hacker-color-200 active:shadow-lg transition duration-150 ease-in-out flex items-center whitespace-nowrap"
               type="button"
@@ -272,7 +272,7 @@ function InsertHandle({
                 focusable="false"
                 data-prefix="fas"
                 data-icon="caret-down"
-                class="w-2 ml-2"
+                className="w-2 ml-2"
                 role="img"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 320 512"
@@ -307,7 +307,7 @@ function InsertHandle({
               aria-labelledby="dropdownMenuButton1"
             >
               {followModules.map((f) => (
-                <li>
+                <li key={f.title}>
                   <a
                     className="
                     cursor-pointer

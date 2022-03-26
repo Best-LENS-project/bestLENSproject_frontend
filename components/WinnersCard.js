@@ -23,7 +23,7 @@ export default function WinnersCard({ pub }) {
         .sort((v1, v2) => v2.votes - v1.votes)
         .slice(0, 3)
         .map((v, i) => (
-          <div className="flex flex-row w-full mt-2 ">
+          <div className="flex flex-row w-full mt-2 " key={i}>
             <svg
               width="43"
               height="43"

@@ -50,7 +50,7 @@ export default function Publication() {
             </div>
           </div>
           <div>
-            <div class="dropdown relative">
+            <div className="dropdown relative">
               <button
                 className="dropdown-toggle inline-block px-7 py-3 bg-hacker-accent-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-hacker-accent-400 hover:shadow-lg focus:bg-hacker-accent-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-hacker-color-200 active:shadow-lg transition duration-150 ease-in-out flex items-center whitespace-nowrap"
                 type="button"
@@ -64,7 +64,7 @@ export default function Publication() {
                   focusable="false"
                   data-prefix="fas"
                   data-icon="caret-down"
-                  class="w-2 ml-2"
+                  className="w-2 ml-2"
                   role="img"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 320 512"
@@ -80,7 +80,7 @@ export default function Publication() {
                 aria-labelledby="dropdownMenuButton1"
               >
                 {sortOptions.map((f) => (
-                  <li>
+                  <li key={f.title}>
                     <a
                       className=" cursor-pointer dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
                       onClick={() => setSortOption(f)}
@@ -157,17 +157,17 @@ export default function Publication() {
                 </div>
 
                 <div className="font-normal mb-3 text-3xl w-full">
-                  <div class="mb-6">
+                  <div className="mb-6">
                     <label
-                      for="email"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                      htmlFor="email"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                     >
                       Your title
                     </label>
                     <input
                       type="text"
                       id="title"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Awesome Project"
                       required
                     />
@@ -186,18 +186,21 @@ export default function Publication() {
                 {pub.fields
                   .filter((f) => f.name != 'title')
                   .map((f) => (
-                    <div className="font-normal  text-3xl w-full mt-3">
-                      <div class="mb-2">
+                    <div
+                      className="font-normal  text-3xl w-full mt-3"
+                      key={f.name}
+                    >
+                      <div className="mb-2">
                         <label
-                          for="email"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                          htmlFor="email"
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >
                           {f.name}
                         </label>
                         <input
                           type="text"
                           id="title"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           placeholder={'Your ' + f.name}
                           required
                         />
@@ -219,7 +222,7 @@ export default function Publication() {
             </div>
           </div>
           {comms.sort(sortOption.sorter).map((c) => (
-            <div className="flex flex-row justify-center">
+            <div className="flex flex-row justify-center" key={c.name}>
               <div className="min-w-md max-w-4xl rounded-md overflow-hidden shadow-xl w-5/6 m-2 bg-white  hover:shadow-hacker-accent-600 hover:translate-y-1 transition-all shadow-slate-600 py-5">
                 <div className="flex flex-col w-full justify-center align-middle items-start px-8">
                   <div className="flex flex-row justify-between  mt-1 w-full mb-5">
@@ -246,7 +249,7 @@ export default function Publication() {
                   {c.fields
                     .filter((f) => f.title != 'title')
                     .map((f) => (
-                      <div className="flex flex-row">
+                      <div className="flex flex-row" key={f.title}>
                         <div className="font-normal text-xl font-mono">
                           {f.name}:{' '}
                         </div>

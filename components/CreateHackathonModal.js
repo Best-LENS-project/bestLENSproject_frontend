@@ -342,7 +342,7 @@ function DetailsInfo({ next, fields, setFields, startDate, setStartDate }) {
         </div>
         {picker && (
           <div>
-            <a class="c-btn c-datepicker-btn" onClick={() => picker.open()}>
+            <a className="c-btn c-datepicker-btn" onClick={() => picker.open()}>
               Open Picker
             </a>
             <pre id="events"></pre>
@@ -354,7 +354,7 @@ function DetailsInfo({ next, fields, setFields, startDate, setStartDate }) {
         </div>
 
         <div className="form-floating mb-3 relative xl:w-96">
-          <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
+          <div className="input-group relative flex flex-wrap items-stretch w-full mb-4">
             <input
               type="text"
               className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -392,10 +392,13 @@ function DetailsInfo({ next, fields, setFields, startDate, setStartDate }) {
           </div>
         </div>
 
-        <div class="flex justify-center">
-          <ul class="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
+        <div className="flex justify-center">
+          <ul className="bg-white rounded-lg border border-gray-200 w-96 text-gray-900">
             {fields.map((f) => (
-              <li class="px-6 py-2 border-b border-gray-200 w-full ease-in transition-all box new-box">
+              <li
+                className="px-6 py-2 border-b border-gray-200 w-full ease-in transition-all box new-box"
+                key={f}
+              >
                 {f}
               </li>
             ))}
@@ -472,7 +475,9 @@ function Preview({ next, image, description, fields, startDate }) {
             {fields
               .filter((f) => f != 'title')
               .map((f) => (
-                <div className="font-normal text-xl">{f}</div>
+                <div className="font-normal text-xl" key={f}>
+                  {f}
+                </div>
               ))}
           </div>
           <div className="px-4">
