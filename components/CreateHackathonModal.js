@@ -307,7 +307,7 @@ function DetailsInfo({ next, fields, setFields, startDate, setStartDate }) {
   const [picker, setPicker] = useState()
 
   useEffect(() => {
-    import('tw-elements')
+    // import('tw-elements')
   }, [])
   console.log(fields)
   // let picker
