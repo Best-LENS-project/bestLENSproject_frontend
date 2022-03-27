@@ -18,6 +18,23 @@ You can start editing the page by modifying `pages/index.js`. The page auto-upda
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
+# About Hackerverse
+
+# Hackerverse Tech
+
+please also look at the smart contract repo here: https://github.com/Best-LENS-project/lens-protocol
+
+Our design principles are to use the protocol as the back-end to avoid the need for any centralization or error-prone paths. Furthermore we try to focus on the use-ability and use the paradigm of always clearly previewing anything that would be commited to the chain.
+Towards that end the smart-contracts were written in solidity, deployed on hardhat local network for testing and then uploaded to Mumbai Polygon test-net.
+
+<!-- [chris may add somehting here #happypath] -->
+
+The front-end is based on NextJS to comply with the defacto-DApp standard and uses tailwindCSS to achieve smooth and intuitive design.
+It allows you to connect your wallet through Blocknative Onboard to be inclusive to all wallets and then to create a profile on our Mumbai deployed LENS version as well as connect an existing handle if you have one.
+Images that you want to use e.g. Profile Images are uploaded to an IPFS server and will automatically be linked through profile creation
+Furthermore, you can explore the hackathons and posts that are available, which are (at the moment partially) queried from the chain.
+We use a flask server that only provides an Insight API to generate graphs which are easy to read and represent interesting facts. Those gaphs are then shown in the frontend (deployment still outstanding). This way we can process the data into the right formats quickly and efficiently without the rather clunky and limited graph APIs that JS offers.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
