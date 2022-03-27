@@ -20,9 +20,15 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 # About Hackerverse
 
+We think Web3 needs a decentralized professional network for Web3. Since the starting point for most people in the space are Hackathons we use them as an Example of how this professional network could look like.
+Organizers can “publish” Hackathons, selecting a collect module to define how submissions should look like, who will be able to vote, define what prices can be won and put escrows behind the prices.
+Participant can submit their work bei “commenting” on the “publication” of the Hachathon. Voters can then vote by collecting these comments.
+
+This enables us to have an overview of all ongoing Hackathons, we can have more creative voting strategies, like enabling participants to vote as well, and we can curate a Hacker Profile where all our submissions are public (Depending on the Follow Module)
+
 # Hackerverse Tech
 
-please also look at the smart contract repo here: https://github.com/Best-LENS-project/lens-protocol
+Please also look at the smart contract repo here: https://github.com/Best-LENS-project/lens-protocol
 
 Our design principles are to use the protocol as the back-end to avoid the need for any centralization or error-prone paths. Furthermore we try to focus on the use-ability and use the paradigm of always clearly previewing anything that would be commited to the chain.
 Towards that end the smart-contracts were written in solidity, deployed on hardhat local network for testing and then uploaded to Mumbai Polygon test-net.
